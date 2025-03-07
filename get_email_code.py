@@ -106,7 +106,9 @@ class EmailVerificationHandler:
                     continue
                 body = self._extract_imap_body(email_message)
                 if body:
-                    code_match = re.search(r"\b\d{6}\b", body)
+                    ogging.info(f"使用imap获取邮件-找到邮件内容: {mail_text}")
+                    code_match = re.search(r"(?<![a-zA-Z@.])\b\d{6}\b", body)
+                    # code_match = re.search(r"\b\d{6}\b", body)
                     if code_match:
                         code = code_match.group()
                         # 删除找到验证码的邮件
@@ -238,6 +240,7 @@ class EmailVerificationHandler:
         mail_subject = mail_detail_data.get("subject", "")
         logging.info(f"找到邮件主题: {mail_subject}")
         # 修改正则表达式，确保 6 位数字不紧跟在字母或域名相关符号后面
+        logging.info(f"找到邮件内容: {mail_text}")
         code_match = re.search(r"(?<![a-zA-Z@.])\b\d{6}\b", mail_text)
 
         if code_match:
