@@ -106,7 +106,7 @@ class EmailVerificationHandler:
                     continue
                 body = self._extract_imap_body(email_message)
                 if body:
-                    ogging.info(f"使用imap获取邮件-找到邮件内容: {mail_text}")
+                    logging.info(f"使用imap获取邮件-找到邮件内容: {body}")
                     code_match = re.search(r"(?<![a-zA-Z@.])\b\d{6}\b", body)
                     # code_match = re.search(r"\b\d{6}\b", body)
                     if code_match:
